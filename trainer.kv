@@ -1,0 +1,174 @@
+<LoginScr>:
+    name: "login"
+    GridLayout:
+        size_hint: (0.5, 0.5)
+        pos: (root.center_x - self.width/2, root.center_y - self.height/2)
+        rows: 4
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: (1, 0.5)
+            Label:
+                text: "MapleStory v62 Trainer V1.0"
+                font_size: "30"
+
+            Label:
+                text: "Login your XoanTools account"
+                font_size: "20"
+
+            Label:
+                text: "If you don't have, get one from www.XoanTools.com"
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: (1, 0.2)
+            Label:
+                text: "Username"
+            TextInput:
+                font_size: self.height * 3/4
+                multiline: False
+                height: 30
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: (1, 0.2)
+            Label:
+                text: "Password"
+            TextInput:
+                font_size: self.height * 3/4
+                password: True
+                multiline: False
+                height: 30
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: (1, 0.2)
+            Button:
+                text: "Login"
+                on_press: self.parent.parent.parent.parent.login()
+            Button:
+                text: "Quit"
+                on_release: quit()
+
+
+<ToolScr>:
+    name: "tool"
+    GridLayout:
+        rows: 4
+        BoxLayout:
+            size_hint: (1, 0.1)
+            orientation: "horizontal"
+            Label:
+                text: "MapleStory v62 Trainer v1.0"
+                font_size: "20"
+                text_size: self.size
+                padding: (15, 0)
+                halign: 'left'
+                valign: 'middle'
+                canvas:
+                    Color:
+                        rgba: (1,1,1,0.2)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+
+            SelectProcessButton:
+                size_hint: (0.3, 1)
+                text: "Select Process"
+
+        CurrentProcessBox:
+            size_hint: (1, 0.1)
+            Label:
+                text: "Selected Process: %s -- PID: %s" %(self.parent.procName, self.parent.pid)
+                color: (0,1,0,1) if self.parent.procName and self.parent.pid else (1,0,0,1)
+                canvas:
+                    Color:
+                        rgba: (1,1,1,0.2)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+
+        BoxLayout:
+            orientation: "horizontal"
+            BoxLayout:
+                size_hint: (0.3, 1)
+                orientation: "vertical"
+
+                Button:
+                    text: "Hack"
+                    size_hint: (1, 0.2)
+                    on_press: self.parent.parent.children[0].current = "hack"
+                Button:
+                    text: "Auto"
+                    size_hint: (1, 0.2)
+                    on_press: self.parent.parent.children[0].current = "auto"
+                Button:
+                    text: "Account"
+                    size_hint: (1, 0.2)
+                    on_press: self.parent.parent.children[0].current = "info"
+
+            ToolScreenManager:
+                HackScreen:
+                    name: "hack"
+                    BoxLayout:
+                        orientation: "vertical"
+                        HackGrid:
+                            size_hint: (1, 0.9)
+                            cols: 2
+
+                        BoxLayout:
+                            size_hint: (1, 0.1)
+                            orientation: "horizontal"
+                            Button:
+                                text: "Mob VAC"
+                                on_press: self.parent.parent.parent.parent.vacPop.open()
+                            Button:
+                                text: "Damage Controller"
+                                on_press: self.parent.parent.parent.parent.dmgPop.open()
+
+                AutoScreen:
+                    name: "auto"
+                    Label:
+                        text: "Under construction"
+
+                AccountInfoScreen:
+                    name: "info"
+                    Label:
+                        text: "Under construction ........"
+
+        BoxLayout:
+            size_hint: (1, 0.05)
+            Label:
+                text: "Made by TocXoan - www.XoanTools.com"
+                font_size: "10"
+                canvas:
+                    Color:
+                        rgba: (1,1,1,0.2)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+
+
+<DamageControllerPopup>:
+    title: "Damage Controller"
+    title_align: "center"
+    size_hint: (0.4, 0.4)
+    title_size: "25"
+
+
+<IncreaseDmgButton>:
+
+
+<DecreaseDmgButton>:
+
+
+<MobVacPopup>:
+    title: "Mob Vac"
+    title_align: "center"
+    size_hint: (0.4, 0.4)
+    title_size: "25"
+
+
+<ScreenMng>:
+    LoginScr:
+    ToolScr:
+
