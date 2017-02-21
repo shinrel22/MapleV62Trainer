@@ -17,8 +17,7 @@ class LoginScr(LoginScreen):
 
 
 class ScreenMng(ScreenManager):
-    def login(self):
-        self.current = "tool"
+    pass
 
 
 class MapleTrainer(App):

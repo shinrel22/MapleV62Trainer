@@ -3,7 +3,8 @@ from kivy.uix.screenmanager import Screen
 
 
 class LoginScreen(Screen):
-    pass
+    def login(self):
+        self.manager.current = "tool"
 
 
 class MainApp(App):
