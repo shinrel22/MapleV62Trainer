@@ -98,6 +98,10 @@
                     size_hint: (1, 0.2)
                     on_press: self.parent.parent.children[0].current = "hack"
                 Button:
+                    text: "Game Statistic"
+                    size_hint: (1, 0.2)
+                    on_press: self.parent.parent.children[0].current = "statistic"
+                Button:
                     text: "Auto"
                     size_hint: (1, 0.2)
                     on_press: self.parent.parent.children[0].current = "auto"
@@ -124,6 +128,9 @@
                             Button:
                                 text: "Damage Controller"
                                 on_press: self.parent.parent.parent.parent.dmgPop.open()
+
+                GameStatisticsScreen:
+                    name: "statistic"
 
                 AutoScreen:
                     name: "auto"
@@ -166,6 +173,88 @@
     title_align: "center"
     size_hint: (0.4, 0.4)
     title_size: "25"
+
+<SafeModeFAQPopup>:
+    title_align: "center"
+    title: "Safe Mode"
+    title_size: "25"
+    size_hint: (0.5, 0.4)
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text_size: (350, 200)
+            text: "When Safe Mode is activated,\nthe trainer automatically turns off all hack tools whenever the number of player in map more than 2 \nand turns on again if everything is ok."
+            valign: "center"
+
+        Button:
+            size_hint: (1, 0.2)
+            text: "Close"
+            on_release: root.dismiss()
+
+
+<GameStatisticsScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        GridLayout:
+            cols: 2
+            Label:
+                text: "Monster(s) in map"
+                text_size: (200, 17)
+                halign: "left"
+            Label:
+                text: "%s" %(root.monsterCount)
+
+            Label:
+                text: "Player(s) in map"
+                text_size: (200, 17)
+                halign: "left"
+            Label:
+                text: "%s" %(root.playerCount)
+
+            Label:
+                text: "Map ID"
+                text_size: (200, 17)
+                halign: "left"
+            Label:
+                text: "%s" %(root.mapID)
+
+            Label:
+                text: "Damage Cap"
+                text_size: (200, 17)
+                halign: "left"
+            Label:
+                text: "%s" %(root.damageCap)
+
+            Label:
+                text: "Magic ATT Cap"
+                text_size: (200, 17)
+                halign: "left"
+            Label:
+                text: "%s" %(root.magicAttCap)
+
+            Label:
+                text: "Meso Drop Cap"
+                text_size: (200, 17)
+                halign: "left"
+            Label:
+                text: "%s" %(root.mesoDropCap)
+
+        SafeModeBox:
+            size_hint: (1, 0.2)
+            orientation: "horizontal"
+
+        SafeModeFAQLayout:
+            size_hint: (1, 0.06)
+            Button:
+                text: "?"
+                size_hint: (0.05, 1)
+                pos_hint: ({"x": 0.22, "y": 2.2})
+                on_press: self.parent.safeModePopup.open()
+
+
+<SafeModeFAQLayout>:
+
+<SafeModeBox>:
 
 
 <ScreenMng>:

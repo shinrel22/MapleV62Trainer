@@ -1060,8 +1060,10 @@ class HackFeatures():
 
 
     def statis(self):
+
+        statistics = {}
         if not self.h_process:
-            return ("N/A", "N/A")
+            return None
 
         playerPointer = 0x00978140
         playerOffset = 0x18
@@ -1069,22 +1071,64 @@ class HackFeatures():
         mobsPointer = 0x0097813C
         mobsOffset = 0x10
 
+        mapIdPointer = 0x00979268
+        mapIdOffset = 0x62C
+
         plPointerData = self.dbg.read_process_memory(playerPointer, 4, h_process=self.h_process)
+        if not plPointerData:
+            statistics["playerCount"] = None
+        else:
+            playersAddr = int(self.dbg.reverseCode(plPointerData).replace(" ", ""), 16) + playerOffset
+            playersNumber = self.dbg.read_process_memory(playersAddr, 4, h_process=self.h_process)
+            playersNumber = int(self.dbg.reverseCode(playersNumber).replace(" ", ""), 16)
+            statistics["playerCount"] = str(playersNumber + 1)
+
         moPointerData = self.dbg.read_process_memory(mobsPointer, 4, h_process=self.h_process)
-        if not plPointerData or not moPointerData:
-            return ("N/A", "N/A")
+        if not moPointerData:
+            statistics["monsterCount"] = None
+        else:
+            mobsAddr = int(self.dbg.reverseCode(moPointerData).replace(" ", ""), 16) + mobsOffset
+            mobsNumber = self.dbg.read_process_memory(mobsAddr, 4, h_process=self.h_process)
+            mobsNumber = int(self.dbg.reverseCode(mobsNumber).replace(" ", ""), 16)
+            statistics["monsterCount"] = str(mobsNumber)
 
-        playersAddr = int(self.dbg.reverseCode(plPointerData).replace(" ", ""), 16) + playerOffset
-        mobsAddr = int(self.dbg.reverseCode(moPointerData).replace(" ", ""), 16) + mobsOffset
+        mapPointerData = self.dbg.read_process_memory(mapIdPointer, 4, h_process=self.h_process)
+        if not mapPointerData:
+            statistics["mapID"] = None
+        else:
+            mapIdAddr = int(self.dbg.reverseCode(mapPointerData).replace(" ", ""), 16) + mapIdOffset
+            mapID = self.dbg.read_process_memory(mapIdAddr, 4, h_process=self.h_process)
+            mapID = int(self.dbg.reverseCode(mapID).replace(" ", ""), 16)
+            statistics["mapID"] = str(mapID)
 
-        mobsNumber = self.dbg.read_process_memory(mobsAddr, 4, h_process=self.h_process)
-        playersNumber = self.dbg.read_process_memory(playersAddr, 4, h_process=self.h_process)
-        if not playersNumber or not mobsNumber:
-            return ("N/A", "N/A")
+        dmgCapAddr = 0x008ED798
+        dmgCap = self.dbg.read_process_memory(dmgCapAddr, 4, h_process=self.h_process)
+        if not dmgCap:
+            statistics["damageCap"] = None
+        else:
+            dmgCap = int(self.dbg.reverseCode(dmgCap).replace(" ", ""), 16)
+            statistics["damageCap"] = str(dmgCap)
 
-        playersNumber = int(self.dbg.reverseCode(playersNumber).replace(" ", ""), 16)
-        mobsNumber = int(self.dbg.reverseCode(mobsNumber).replace(" ", ""), 16)
+        magicAttCapAddr = 0x006642A7
+        magicAttCap = self.dbg.read_process_memory(magicAttCapAddr, 4, h_process=self.h_process)
+        if not magicAttCap:
+            statistics["magicAttCap"] = None
+        else:
+            magicAttCap = int(self.dbg.reverseCode(magicAttCap).replace(" ", ""), 16)
+            statistics["magicAttCap"] = str(magicAttCap)
 
-        return playersNumber, mobsNumber
+        mesoDropCapAddr = 0x006C150B
+        mesoDropCap = self.dbg.read_process_memory(mesoDropCapAddr, 4, h_process=self.h_process)
+        if not mesoDropCap:
+            statistics["mesoDropCap"] = None
+        else:
+            mesoDropCap = int(self.dbg.reverseCode(mesoDropCap).replace(" ", ""), 16)
+            statistics["mesoDropCap"] = str(mesoDropCap)
+
+        return statistics
+
+
+
+
 
 
