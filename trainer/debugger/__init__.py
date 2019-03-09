@@ -8,26 +8,30 @@ ntdll = windll.ntdll
 
 class Debugger(object):
     def __init__(self, process_name=None):
-        if not process_name:
-            self.pid = None
-            self.h_process = None
-        else:
-            self.pid = self.get_pid(process_name)
-            self.h_process = self.open_process()
+        self.pid = None
+        self.h_process = None
+
+        if process_name:
+            self.open_process(process_name)
 
         self.h_thread = None
         self.debugger_active = False
 
+    def close_process(self):
+        self.pid = None
+        self.h_process = None
+
     def get_pid(self, process_name):
         process_list = self.enumerate_processes()
-        for procID in process_list:
-            if process_list[procID] == process_name:
-                return procID
+        for proc_id in process_list:
+            if process_list[proc_id] != process_name:
+                continue
+            return proc_id
 
         print("Couldn't find", process_name)
         return None
 
-    def open_process(self, pid=None):
+    def get_h_process(self, pid=None):
         if self.pid:
             pid = self.pid
         try:
@@ -36,6 +40,10 @@ class Debugger(object):
         except Exception as e:
             print(e)
             return None
+
+    def open_process(self, process_name):
+        pid = self.get_pid(process_name)
+        return self.get_h_process(pid)
 
     def attach(self, pid=None):
         if self.pid:
@@ -324,4 +332,3 @@ class Debugger(object):
             kernel32.CloseHandle(h_thread)
             return context
         return False
-

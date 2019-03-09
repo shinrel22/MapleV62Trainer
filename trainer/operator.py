@@ -617,7 +617,7 @@ class HackingOperator(object):
         else:
             print("h_process is", self.h_process)
 
-    def statis(self):
+    def get_statistic(self):
 
         statistics = {}
         if not self.h_process:
