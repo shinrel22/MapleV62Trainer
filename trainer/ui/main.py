@@ -8,6 +8,7 @@ from MapleTrainer.toolScreen import ToolScreen
 
 Builder.load_file("trainer.kv")
 
+
 class ToolScr(ToolScreen):
     pass
 
