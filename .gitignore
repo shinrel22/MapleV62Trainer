@@ -50,6 +50,5 @@ celerybeat-schedule
 venv/
 ENV/
 tmp
-tests/
 config.*
 *.ini
