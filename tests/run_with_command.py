@@ -4,12 +4,12 @@ from trainer.operator import HackingOperator
 operator = HackingOperator()
 
 
-if __name__ == '__main__':
+def run():
     process_name = input('Enter your client name: ')
     process = operator.debugger.open_process(process_name)
     if not process:
         print('Cannot open %s' % process_name)
-
+        return
     operator.h_process = operator.debugger.h_process
 
     while True:
@@ -31,3 +31,7 @@ if __name__ == '__main__':
             continue
 
         feature(active)
+
+
+if __name__ == '__main__':
+    run()

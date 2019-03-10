@@ -42,6 +42,8 @@ class Debugger(object):
             return None
 
     def open_process(self, process_name):
+        if isinstance(process_name, str):
+            process_name = process_name.encode()
         pid = self.get_pid(process_name)
         return self.get_h_process(pid)
 
