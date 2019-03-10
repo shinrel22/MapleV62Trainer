@@ -26,6 +26,7 @@ class Debugger(object):
         for proc_id in process_list:
             if process_list[proc_id] != process_name:
                 continue
+            self.pid = proc_id
             return proc_id
 
         print("Couldn't find", process_name)
