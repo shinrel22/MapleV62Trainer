@@ -37,6 +37,7 @@ class Debugger(object):
             pid = self.pid
         try:
             h_process = kernel32.OpenProcess(PROCESS_ALL_ACCESS, False, pid)
+            self.h_process = h_process
             return h_process
         except Exception as e:
             print(e)
